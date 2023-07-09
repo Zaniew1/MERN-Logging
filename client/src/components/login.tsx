@@ -6,6 +6,7 @@ export  const LoginComponent = () => {
     const [password, setPassword] = useState<string>('');
     function createNewUser(e: React.SyntheticEvent<EventTarget>): void {
       e.preventDefault();
+      console.log("ok");
         fetch("http://localhost:3001/createNewUser", {
           method: "POST",
           headers: {
