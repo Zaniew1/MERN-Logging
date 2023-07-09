@@ -8,7 +8,7 @@ const cors = require('cors');
 
 
 // We are creating connection with MongoDB Atlas
-mongoose.connect("mongodb+srv://mzaniewski:Dragonborn1%40%23@zan-it-cluster.jofwtlr.mongodb.net/MERN-Logging?retryWrites=true&w=majority");
+mongoose.connect("");
 //We allow sending JSON from frontend to backend
 app.use(express.json());
 // We eliminate a lot of errors
