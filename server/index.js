@@ -8,7 +8,7 @@ const cors = require('cors');
 
 
 // We are creating connection with MongoDB Atlas
-mongoose.connect("");
+mongoose.connect(`${process.env.MONGO_DB_PASS}`);
 //We allow sending JSON from frontend to backend
 app.use(express.json());
 // We eliminate a lot of errors
