@@ -6,7 +6,7 @@ function App() {
   return (
     <main className="container mx-auto bg-gray-200" >
       <div>
-        <button >Sign up</button>
+        <button className='text-4xl' >Sign up</button>
       </div>
       <div>
         <LoginComponent/>
