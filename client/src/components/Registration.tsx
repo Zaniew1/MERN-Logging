@@ -1,6 +1,6 @@
 import {  useState } from 'react';
-
-export  const RegistrationComponent = () => {
+import '../style.css';
+export  const Registration = () => {
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');

@@ -1,5 +1,5 @@
-import { LoginComponent } from './components/login';
-import { RegistrationComponent } from './components/registration';
+// import { Login } from './components/login';
+// import { Registration } from './components/registration';
 import './index.css';
 import './style.css';
 import { useState } from 'react';
@@ -30,9 +30,9 @@ const [slider, setSlider] = useState<boolean>(false)
               <a href="#" className="forgot">Forgot Password</a>
             </form>
           </div>
-        <LoginComponent/>
+        {/* <Login/> */}
           {/* REJESTRACJA */}
-          {/* <div className='form signUpForm'>
+          <div className='form signUpForm'>
             <form>
               <h3>Sign Up</h3>
               <input type="text" placeholder="Username"/>
@@ -42,8 +42,8 @@ const [slider, setSlider] = useState<boolean>(false)
               <button className='formBtn' >Register</button>
               <a href="#" className="forgot">Forgot Password</a>
             </form>
-          </div> */}
-          <RegistrationComponent/>
+          </div>
+          {/* <Registration/> */}
         </div>
       </main>
     </body>
