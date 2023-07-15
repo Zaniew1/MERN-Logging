@@ -19,7 +19,6 @@ export  const Registration = () => {
         setError("Hasło powinno zawierać minimum 8 znaków, 1 dużą literę, 1 małą i jeden znak specjalny");
         return;
       }
-        
         fetch("http://localhost:3001/createNewUser", {
           method: "POST",
           headers: {
@@ -49,7 +48,7 @@ export  const Registration = () => {
               <input type="text" placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}} value={username} required/>
               <input type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}} value={email} required/>
               <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value); setError('')}} value={password} required/>
-              <input type="password" placeholder="Confirm Password" onChange={(e)=>{setConfirmPassword(e.target.value);setError('')}} value={confirmPassword} required/>
+              <input type="password" placeholder="Confirm Password" onChange={(e)=>{setConfirmPassword(e.target.value); setError('')}} value={confirmPassword} required/>
               <button onClick={createNewUser} className='formBtn' >Register</button>
               <div className={error ? "error" : ""}>{error ? error : ''}</div>
             </form>
