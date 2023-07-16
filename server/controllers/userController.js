@@ -11,7 +11,21 @@ const signToken = id => {
 }
 
 
-
+exports.getUser = async (req, res) =>{
+    try{
+        const {id} = req.body;
+        const user = await Users.findById(id);
+        res.status(200).json({
+            status:'succes',
+            results: allUsers.length,
+            data:{
+                allUsers
+            }
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
 exports.getAllUsers = async (req, res) => {
     try{
         const allUsers = await Users.find();
