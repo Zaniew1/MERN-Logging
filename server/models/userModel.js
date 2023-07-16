@@ -34,6 +34,13 @@ const UserSchema = new mongoose.Schema({
     } 
 });
 
+
+
+UserSchema.methods.comparePasswords = async function( typedPassword, databasePassword){
+    return await bcrypt.compare(typedPassword, databasePassword);
+}
+
+
 // this middleware wil fire off just before save and only if password changes
 UserSchema.pre('save' , async function(next){
     // isModified is mongoose function

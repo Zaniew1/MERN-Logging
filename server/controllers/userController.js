@@ -2,10 +2,19 @@
 const Users = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
+
+
+const signToken = id => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN
+    })
+}
+
+
+
 exports.getAllUsers = async (req, res) => {
     try{
         const allUsers = await Users.find();
-        console.log(allUsers)
         res.status(200).json({
             status:'succes',
             results: allUsers.length,
@@ -28,14 +37,16 @@ exports.loginUser = async (req, res)=>{
         console.log('zjebałeś')
         return
     }
-
     const user = await Users.findOne({email}).select('+password');
-    const token = '';
+    if(!user || !user.comparePasswords(password, user.password)){
+        return next(new Error('gówno'))
+    }
+    const token = signToken(user._id);
+    console.log('zalogowałeś się ')
     res.status(200).json({
         status: "success",
         token
     })
-
 }
 
 exports.createNewUser = async (req, res) => {
@@ -61,7 +72,7 @@ exports.createNewUser = async (req, res) => {
             });
             // we create a token by giving it user id we just created , and secret key  created by us and stored in .env file
             // we also set algorithm and expire date after which token will become useless
-            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
+            const token = signToken(newUser._id);
             res.status(201).json({
                 status:'success',
                 token,
