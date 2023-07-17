@@ -12,5 +12,6 @@ router.route('/LoginUser', ).post(userController.loginUser);
 
 router.get('/users', userController.getAllUsers);
 router.get('/users/:id', userController.getUser);
+console.log('123')
 
 module.exports = router;
