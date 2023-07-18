@@ -41,8 +41,21 @@ exports.getAllUsers = async (req, res) => {
     }
 }
 
+exports.forgetPassword = async (req, res, next)=>{
+// find an account with that email
+const user = await Users.findOne({email:req.body.email})
+// check if this account exists
+if(!user) return next( console.log('error'))
+
+const resetToken = user.createPasswordResetToken();
+// we turn off any validation in UserSchema
+await user.save({validateBeforeSave: false});
+}
+
+
 exports.loginUser = async (req, res)=>{
     const {email, password} = req.body;
+    console.log('123');
     if(!email || !password){
         console.log('zjebałeś');
         return

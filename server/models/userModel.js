@@ -2,6 +2,7 @@
 // WE are creating a schema to given collection in database
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const crypto = require('crypto')
 
 const UserSchema = new mongoose.Schema({
     username:{
@@ -31,15 +32,28 @@ const UserSchema = new mongoose.Schema({
     creationDate:{
        default: (new Date().getTime()),
        type: Number,
-    } 
+    },
+    passwordResetToken: {
+        type: String
+    },
+    passwordResetExpires: {
+        type: Date
+    }
 });
 
 
 
 UserSchema.methods.comparePasswords = async function( typedPassword, databasePassword){
+    // this function compares two passwords, one password is hashed, one is not,
+    // comparizon is made by hashing first password and then comparing both hashed passwords
     return await bcrypt.compare(typedPassword, databasePassword);
 }
-
+UserSchema.methods.createPasswordResetToken = function(){
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    this.passwordResetToken = Date.now() + (10 *60* 1000);
+    return resetToken;
+}
 
 // this middleware wil fire off just before save and only if password changes
 UserSchema.pre('save' , async function(next){
