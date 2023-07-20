@@ -8,7 +8,7 @@ const router = express.Router();
 // router.route('/getAllUsers', ).get(userController.getAllUsers);
 router.route('/createNewUser').post(userController.createNewUser);
 router.route('/LoginUser').post(userController.loginUser);
-router.route('/forgetPassword').post(userController.forgetPassword);
+router.route('/forgetPassword/:token').patch(userController.forgetPassword);
 
 
 router.get('/users', userController.getAllUsers);

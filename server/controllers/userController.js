@@ -42,16 +42,35 @@ exports.getAllUsers = async (req, res) => {
 }
 
 exports.forgetPassword = async (req, res, next)=>{
-// find an account with that email
-const user = await Users.findOne({email:req.body.email})
-// check if this account exists
-if(!user) return next( console.log('error'))
+    // find an account with that email
+    const user = await Users.findOne({email:req.body.email})
+    // check if this account exists
+    if(!user) return next( console.log('error'))
 
-const resetToken = user.createPasswordResetToken();
-// we turn off any validation in UserSchema
-await user.save({validateBeforeSave: false});
+    const resetToken = user.createPasswordResetToken();
+    // we turn off any validation in UserSchema
+    await user.save({validateBeforeSave: false});
+    const resetURL = `${req.protocol}://${req.get('host')}/resetPassword}`;
+    const message = `Forgot your password ? Go to : ${resetToken} `;
+    try{
+
+        await sendEmail({
+            email: user.email,
+            subject: 'Yur password reset token (valid for 10 min)',
+            message
+        })
+        res.status(200).json({
+            status: 'success',
+            message: 'Token sent to email !'
+        })
+    }
+    catch(err){
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save({validateBeforeSabve : false});
+        return next()
+    }
 }
-
 
 exports.loginUser = async (req, res)=>{
     const {email, password} = req.body;
