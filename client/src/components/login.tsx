@@ -39,6 +39,7 @@ export  const Login= () => {
     e.preventDefault();
     if(!email){
       setError('Email jest wymagany przy odzyskiwaniu hasła');
+      return;
     }
     fetch("http://localhost:3001/forgetPassword", {
       method: "POST",
