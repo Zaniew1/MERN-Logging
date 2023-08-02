@@ -1,28 +1,17 @@
-import { Login } from './components/Login';
-import { Registration } from './components/Registration';
+import { Routes, Route } from 'react-router-dom';
+import { RegistrationLoginPage } from './components/RegistrationLoginPage';
+import { Home } from './components/Home';
 import './index.css';
 import './style.css';
-import { useState } from 'react';
 function App() {
 
-const [slider, setSlider] = useState<boolean>(false)
   return (
-    <div className={`wrapper ${slider == false ? "" : "slide"}`}>
-      <main className="container" >
-        <div className="box signin">
-          <h2 className="header">Already have an account ?</h2>
-          <button className="button" onClick={()=>setSlider(false)}>Sign in</button>
-        </div>
-        <div className="box  signup">
-          <h2 className="header">Don't have an account ?</h2>
-          <button className="button" onClick={()=>setSlider(true)} >Sign up</button>
-        </div>
-        <div className="formWrapper">
-          <Login/>
-          <Registration/>
-        </div>
-      </main>
-    </div>
+      <Routes>
+        <Route index element={<Home/>}></Route>
+        <Route path={'/login'} element={<RegistrationLoginPage/>}></Route>
+        <Route path={'/resetPassword'} element={<RegistrationLoginPage/>}></Route>
+      </Routes>
+      
   )
 }
 
