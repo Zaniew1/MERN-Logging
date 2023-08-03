@@ -1,4 +1,5 @@
 import {  useState } from 'react';
+import {Link} from 'react-router-dom'
 import '../index.css';
 import '../style.css';
 export  const Login= () => {
@@ -35,32 +36,7 @@ export  const Login= () => {
         console.error("Error:", error);
       });
   }
-  function forgetPassword (e: React.SyntheticEvent<EventTarget>): void {
-    e.preventDefault();
-    if(!email){
-      setError('Email jest wymagany przy odzyskiwaniu hasła');
-      return;
-    }
-    fetch("http://localhost:3001/forgetPassword", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-  }
+ 
     return(
       <div className='form signInForm'>
       <form>
@@ -68,7 +44,7 @@ export  const Login= () => {
         <input type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value); setError('');}} value={email} required/>
         <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value); setError('');}} value={password} required/>
         <button className='formBtn' onClick={LoginUser} >Login</button>
-        <a href="#" className="forgot" onClick={(e)=>{forgetPassword(e)}}>Forgot Password</a>
+        <Link to="/forgetPassword" className="forgot" >Forgot Password</Link>
         <div className={error ? "error" : ""}>{error ? error : ''}</div>
       </form>
     </div>

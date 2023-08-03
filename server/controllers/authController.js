@@ -23,7 +23,8 @@ exports.forgetPassword = catchAsync( async (req, res, next)=>{
     const resetToken = user.createPasswordResetToken();
     // we turn off any validation in UserSchema
     await user.save({validateBeforeSave: false});
-    const resetURL = `${req.protocol}://${req.get('host')}/resetPassword/${resetToken}`;
+    
+    const resetURL = `${req.protocol}://localhost:5173/resetPassword/${resetToken}`;
     const message = `Forgot your password ? Go to : ${resetURL}.\n If you didnt then ignore that message `;
     console.log(message)
     try{
@@ -48,9 +49,8 @@ exports.forgetPassword = catchAsync( async (req, res, next)=>{
 
 exports.resetPassword = catchAsync(async (req, res, next) =>{
     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
-    console.log(hashedToken)
     const user =  await Users.findOne({passwordResetToken: hashedToken, passwordResetExpires: {$gt:Date.now()}})
-    console.log(req.body)
+    console.log(user)
     if(!user) return next(new AppError('User not found', 404))
     user.password = req.body.password;
     user.passwordConfirm = req.body.passwordConfirm;
