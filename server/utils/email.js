@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
-const htmlToText = require('html-to-text')
+const htmlToText = require('html-to-text');
+// const EmailTemplate = require('../../client/src/components/')
 require('dotenv').config();
 module.exports = class  Email{
   constructor(){
@@ -21,7 +22,7 @@ module.exports = class  Email{
   }
   async send(template, subject){
     //reactowy komponent
-    const html = ''
+    // const html = <EmailTemplate name={this.to} text={this.subject}/>
     const mailOptions = {
       from: this.from,
       to: this.to,
