@@ -1,11 +1,14 @@
 import { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import '../index.css';
 import '../style.css';
 export const ResetPassword = () => {
     const [password, setPassword] = useState<string>('');
     const [passwordConfirm, setPasswordConfirm] = useState<string>('');
     const [error, setError] = useState<string>("")
-    const [success, setSuccess] = useState<string>("")
+    const [success, setSuccess] = useState<string>("");
+    const navigate = useNavigate();
+
     function resetPassword (e: React.SyntheticEvent<EventTarget>): void {
         e.preventDefault();
         if(!password || !passwordConfirm){
@@ -35,7 +38,10 @@ export const ResetPassword = () => {
         })
         .then((result) => {
             console.log(result)
-          setSuccess('Udało się zresetować hasło')
+          setSuccess('Udało się zresetować hasło');
+          setTimeout(()=>{
+            navigate('/');
+          }, 500)
           setError('');
         })
         .catch((error) => {
@@ -44,6 +50,7 @@ export const ResetPassword = () => {
           setSuccess('');
         });
       }
+
     return (
         <div className={`wrapper`}>
             <main className="container" >

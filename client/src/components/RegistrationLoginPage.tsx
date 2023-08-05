@@ -1,14 +1,19 @@
 import { Login } from './/Login';
 import { Registration } from './Registration';
+import {useNavigate } from "react-router-dom";
 import '../index.css';
 import '../style.css';
 import { useState } from 'react';
 export const RegistrationLoginPage = () =>{
-const [slider, setSlider] = useState<boolean>(false)
+const [slider, setSlider] = useState<boolean>(false);
+const navigate = useNavigate();
 
+function goBack(){
+  navigate(-1);
+}
     return (
     <div className={`wrapper ${slider == false ? "" : "slide"}`}>
-
+        <div className="goBack" onClick={goBack}>Go back</div>
         <main className="container" >
         <div className="box signin">
           <h2 className="header">Already have an account ?</h2>

@@ -1,10 +1,12 @@
 import { useState } from "react";
+import {useNavigate } from "react-router-dom";
 import '../index.css';
 import '../style.css';
 export const ForgetPassword = () => {
     const [email, setEmail] = useState<string>('');
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
+    const navigate = useNavigate();
 
     function forgetPassword (e: React.SyntheticEvent<EventTarget>): void {
         e.preventDefault();
@@ -31,8 +33,12 @@ export const ForgetPassword = () => {
           setError('Coś się nie udało, spróbuj ponownie później')
         });
       }
+      function goBack(){
+        navigate(-1);
+      }
     return (
         <div className={`wrapper`}>
+            <div className="goBack" onClick={goBack}>Go back</div>
             <main className="container" >
             <div className='form signInForm'>
                 <form>
