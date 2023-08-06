@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "tailwind.config.js", "*/.ts", "*/.tsx"],
+  "include": ["src", "tailwind.config.js", "*/.ts", "*/.tsx", "../server/views/WelcomeCard.jsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

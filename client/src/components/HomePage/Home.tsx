@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom'
 import {UserInfo} from './UserInfo'
 import {useState} from 'react'
-import '../style.css';
-export const Home = ()=>{
+import '../../style.css';
+export const Home:React.FC = ():JSX.Element=>{
     const [loggedin, setLoggedin] = useState<boolean>(false);
     const a = true;
     if(!a){

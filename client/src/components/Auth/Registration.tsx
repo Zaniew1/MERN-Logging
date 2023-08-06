@@ -1,7 +1,7 @@
 import {  useState } from 'react';
-import '../index.css';
-import '../style.css';
-export  const Registration = () => {
+import '../../index.css';
+import '../../style.css';
+export  const Registration:React.FC = ():JSX.Element => {
 
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -9,7 +9,6 @@ export  const Registration = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [error, setError] = useState<string>("")
     function createNewUser(e: React.SyntheticEvent<EventTarget>): void {
-      console.log(username)
       e.preventDefault();
       if(password !== confirmPassword ){
         setError("Hasła powinne być takie same");

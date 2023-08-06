@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import { RegistrationLoginPage } from './components/RegistrationLoginPage';
-import { Home } from './components/Home';
-import { ForgetPassword } from './components/ForgetPassword';
-import { ResetPassword } from './components/ResetPassword';
+import { RegistrationLoginPage } from './components/Auth/RegistrationLoginPage';
+import { Home } from './components/HomePage/Home';
+import { ForgetPassword } from './components/Auth/ForgetPassword';
+import { ResetPassword } from './components/Auth/ResetPassword';
 import './index.css';
 import './style.css';
 function App() {

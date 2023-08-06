@@ -1,8 +1,8 @@
 import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
-import '../index.css';
-import '../style.css';
-export const ResetPassword = () => {
+import '../../index.css';
+import '../../style.css';
+export const ResetPassword:React.FC = ():JSX.Element => {
     const [password, setPassword] = useState<string>('');
     const [passwordConfirm, setPasswordConfirm] = useState<string>('');
     const [error, setError] = useState<string>("")

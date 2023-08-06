@@ -8,7 +8,8 @@ const AppError = require('./utils/appError')
 const userRouter = require ('./routes/userRoutes');
 const cors = require('cors');
 const globalErrorHandler =require('./controllers/errorController')
-
+const {View} = require("grandjs")
+View.settings.set("views", "./views")
 // We are creating connection with MongoDB Atlas
 mongoose.connect(`${process.env.MONGO_DB_PASS}`);
 //We allow sending JSON from frontend to backend

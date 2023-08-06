@@ -1,11 +1,14 @@
 import { useState } from "react";
 import {useNavigate } from "react-router-dom";
-import '../index.css';
-import '../style.css';
-export const ForgetPassword = () => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowTurnUp } from "@fortawesome/free-solid-svg-icons";
+import '../../index.css';
+import '../../style.css';
+export const ForgetPassword:React.FC = ():JSX.Element => {
     const [email, setEmail] = useState<string>('');
     const [error, setError] = useState<string>("")
-    const [success, setSuccess] = useState<string>("")
+    const [success, setSuccess] = useState<string>("");
+
     const navigate = useNavigate();
 
     function forgetPassword (e: React.SyntheticEvent<EventTarget>): void {
@@ -38,7 +41,7 @@ export const ForgetPassword = () => {
       }
     return (
         <div className={`wrapper`}>
-            <div className="goBack" onClick={goBack}>Go back</div>
+            <div className="goBack" onClick={goBack}><FontAwesomeIcon icon={faArrowTurnUp} /></div>
             <main className="container" >
             <div className='form signInForm'>
                 <form>

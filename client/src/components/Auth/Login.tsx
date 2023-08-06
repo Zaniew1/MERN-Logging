@@ -1,8 +1,8 @@
 import {  useState } from 'react';
 import {Link} from 'react-router-dom'
-import '../index.css';
-import '../style.css';
-export  const Login= () => {
+import '../../index.css';
+import '../../style.css';
+export  const Login:React.FC = ():JSX.Element => {
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
