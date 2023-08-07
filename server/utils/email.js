@@ -16,14 +16,25 @@ module.exports = class  Email{
   }
   
   newTransport(){
-      return nodemailer.newTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        auth: {
-          user: process.env.EMAIL_NAME,
-          pass: process.env.EMAIL_PASSWORD
-        }
-      });
+
+    return nodemailer.createTransport({
+      service: "SendGrid",
+      auth:{
+        user:process.env.SENDGRID_USERNAME,
+        pass:process.env.SENDGRID_PASSWORD
+      }
+    })
+
+
+
+      // return nodemailer.newTransport({
+      //   host: process.env.EMAIL_HOST,
+      //   port: process.env.EMAIL_PORT,
+      //   auth: {
+      //     user: process.env.EMAIL_NAME,
+      //     pass: process.env.EMAIL_PASSWORD
+      //   }
+      // });
   }
   async send(template, subject){
     //reactowy komponent

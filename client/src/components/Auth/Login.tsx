@@ -16,7 +16,7 @@ export  const Login:React.FC = ():JSX.Element => {
         setError("Hasło powinno zawierać minimum 8 znaków, 1 dużą literę, 1 małą i jeden znak specjalny");
         return;
       }
-      fetch("http://localhost:3001/LoginUser", {
+      fetch("http://localhost:3001/loginUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
