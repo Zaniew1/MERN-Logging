@@ -1,13 +1,21 @@
-import {  useState } from 'react';
 import '../../index.css';
 import '../../style.css';
+import {useNavigate } from 'react-router-dom'
+
+import { useState, useContext } from "react";
+import {AuthContext, UserDataType} from '../../store/Auth-context'
+
+
 export  const Registration:React.FC = ():JSX.Element => {
 
+  const navigate = useNavigate();
+  const {setloggedIn, setUserData} = useContext(AuthContext);
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [error, setError] = useState<string>("")
+  const [success, setSuccess] = useState<string>("");
     function createNewUser(e: React.SyntheticEvent<EventTarget>): void {
       e.preventDefault();
       if(password !== confirmPassword ){
@@ -26,17 +34,23 @@ export  const Registration:React.FC = ():JSX.Element => {
           body: JSON.stringify({ username, email, password, confirmPassword }),
         })
         .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
           return response.json();
         })
-        .then((result) => {
-          console.log(result);
+        .then((result:UserDataType) => {
+          if(result.status != 'fail'){
+            setSuccess('Udało się stworzyć użytkownika')
+            setloggedIn(true);
+            setUserData(result)
+            setTimeout(()=>{
+              navigate('/');
+            },800)
+          }else{
+            setError(`${result.message}`);
+          }
         })
         .catch((error) => {
-          console.error("Error:", error);
-          setError("Błąd serwera, spróbuj później");
+          console.error(error);
+          setError("Network with server was not ok");
         });
     }
 
@@ -50,6 +64,7 @@ export  const Registration:React.FC = ():JSX.Element => {
               <input type="password" placeholder="Confirm Password" onChange={(e)=>{setConfirmPassword(e.target.value); setError('')}} value={confirmPassword} required/>
               <button onClick={createNewUser} className='formBtn' >Register</button>
               <div className={error ? "error" : ""}>{error ? error : ''}</div>
+              <div className={success ? "success" : ""}>{success ? success : ''}</div>
             </form>
         </div>
     );

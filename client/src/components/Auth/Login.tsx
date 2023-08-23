@@ -1,12 +1,16 @@
-import {  useState } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate } from 'react-router-dom'
 import '../../index.css';
 import '../../style.css';
-export  const Login:React.FC = ():JSX.Element => {
+import { useState, useContext } from "react";
+import {AuthContext, UserDataType} from '../../store/Auth-context'
 
+export  const Login:React.FC = ():JSX.Element => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>("")
+    const {setloggedIn, setUserData} = useContext(AuthContext);
+
     function LoginUser(e: React.SyntheticEvent<EventTarget>): void {
       e.preventDefault();
       if(email === ""){
@@ -29,8 +33,12 @@ export  const Login:React.FC = ():JSX.Element => {
         }
         return response.json();
       })
-      .then((result) => {
-        console.log(result);
+      .then((result:UserDataType) => {
+        if(result.status == 'success'){
+          setloggedIn(true);
+          setUserData(result)
+          navigate('/');
+        }
       })
       .catch((error) => {
         console.error("Error:", error);

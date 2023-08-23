@@ -20,6 +20,16 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "tailwind.config.js", "*/.ts", "*/.tsx", "../server/views/WelcomeCard.jsx"],
+  "include": [
+    "src",
+    "postcss.config.js",
+    "vite.config.ts",
+    "src/**/*.ts",
+    "tailwind.config.js",
+    "globals.d.ts",
+    ".eslintrc.cjs",
+    "*/.ts",
+    "*/.tsx",
+    "../server/views/WelcomeCard.jsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

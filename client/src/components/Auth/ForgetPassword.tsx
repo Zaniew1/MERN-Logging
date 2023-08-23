@@ -27,9 +27,13 @@ export const ForgetPassword:React.FC = ():JSX.Element => {
         .then((response) => {
           return response.json();
         })
-        .then((result) => {
-          console.log(result);
-          setSuccess('Wysłano link resetujący na maila')
+        .then((result:{status:string, message: string}) => {
+          if(result.status != 'fail'){
+            setSuccess('Wysłano link resetujący na maila')
+          }else{
+            setError(result.message)
+          }
+
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -46,7 +50,7 @@ export const ForgetPassword:React.FC = ():JSX.Element => {
             <div className='form signInForm'>
                 <form>
                     <h3>Forgot your password? Enter your email and we will send you activation link</h3>
-                    <input type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value); setError('');}} value={email} required/>
+                    <input type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value);setSuccess(''); setError('');}} value={email} required/>
                     <button className='formBtn' onClick={forgetPassword} >Send</button>
                     <div className={error ? "error" : ""}>{error ? error : ''}</div>
                     <div className={success ? "success" : ""}>{success ? success : ''}</div>

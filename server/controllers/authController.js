@@ -12,18 +12,16 @@ const signToken = id => {
 }
 const createSendToken = (user, statusCode, req, res) => {
     const token = signToken(user._id);
-  
-    res.cookie('jwt', token, {
-      expires: new Date(
-        Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-      ),
-      httpOnly: true,
-      secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
-    });
+    
+    // res.cookie('jwt', token, {
+    //     expires: new Date(
+    //       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+    //     httpOnly: true,
+    //     secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
+    //   });
   
     // Remove password from output
     user.password = undefined;
-  
     res.status(statusCode).json({
       status: 'success',
       token,
@@ -38,7 +36,7 @@ exports.forgetPassword = catchAsync( async (req, res, next)=>{
     // find an account with that email
     const user = await Users.findOne({email:req.body.email})
     // check if this account exists
-    if(!user) return next( new AppError('User not found', 404));
+    if(!user) return next( new AppError('Użytkownik nie znaleziony', 404));
     
     const resetToken = user.createPasswordResetToken();
     // we turn off any validation in UserSchema
@@ -47,14 +45,15 @@ exports.forgetPassword = catchAsync( async (req, res, next)=>{
     try{
         
     const resetURL = `${req.protocol}://localhost:5173/resetPassword/${resetToken}`;
-    console.log(resetURL);
-    await new Email(user, resetUrl).sendPasswordReset();
+    console.log(resetURL)
+    await new Email(user, resetURL).sendPasswordReset();
         res.status(200).json({
             status: 'success',
             message: 'Token sent to email !'
         })
     }
     catch(err){
+        console.log(err)
         user.passwordResetToken = undefined;
         user.passwordResetExpires = undefined;
         await user.save({validateBeforeSabve : false});
@@ -90,19 +89,29 @@ exports.loginUser = catchAsync(async (req, res, next)=>{
         
     }
     const user = await Users.findOne({email}).select('+password');
-    if(!user || !user.comparePasswords(password, user.password)){
-        return next(new AppError("Password is incorrect",400))
-    }
-    const token = signToken(user._id);
-    res.status(200).json({
-        status: "success",
-        token
-    })
+    
+//// TU COŚ NIE DZIAŁA
+    console.log( user.correctPassword(password, user.password) )
+
+    // if (!user || !(await user.correctPassword(password, user.password))) {
+    //     return next(new AppError('Incorrect email or password', 401));
+    //   }
+    createSendToken(user, 200, req, res);
 })
 
+exports.logoutUser = catchAsync(async (req, res, next)=>{
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+      });
+      res.status(200).json({ status: 'success' });
+
+})
+
+
+
 exports.createNewUser = catchAsync( async (req, res, next) => {
-    
-    const {email, password, confirmPassword} = req.body;
+    const {username, email, password, confirmPassword} = req.body;
     if(!email || !password){
         return next(new AppError('There have to be email and password', 400));
     }
@@ -114,17 +123,21 @@ exports.createNewUser = catchAsync( async (req, res, next) => {
     }
     
     // we check if email already exists
-    // const user = await Users.findOne({email});
-    // if(user){
-        //     return next(new AppError("There is user with that email already", 400));
-        // }
-        const newUser = await Users.create(req.body);
-        console.log(newUser)
+    const user = await Users.findOne({email});
+    if(user){
+            return next(new AppError("There is user with that email already", 400));
+        }
+        const newUser = await Users.create({
+            username,
+            email,
+            password,
+            confirmPassword
+        });
         // we create a token by giving it user id we just created , and secret key  created by us and stored in .env file
         // we also set algorithm and expire date after which token will become useless
         const url = `${req.protocol}://${req.get('host')}/`;
         // we send email with welcome Card component as welcome message
         await new Email(newUser, url).sendWelcome();
-      
         createSendToken(newUser, 201, req, res);
-})
+        
+    })

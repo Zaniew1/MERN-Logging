@@ -2,6 +2,7 @@
 
 import {useState} from 'react';
 export const useLoginUser = (e:React.MouseEvent, email: string, password: string) =>  {
+     e.preventDefault();
     const [error, setError] = useState<string>('');
     if(email === ""){
       setError('Email jest wymagany przy zakładaniu konta');

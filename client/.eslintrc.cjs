@@ -13,8 +13,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     tsconfigRootDir: __dirname,
+    project: './tsconfig.json',
   },
   plugins: ['react-refresh'],
   rules: {
@@ -24,4 +25,10 @@ module.exports = {
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
   },
+  overrides: [
+    {
+      files: ["**/*.ts"], // Adjust this pattern to match your use case
+      excludedFiles: ["vite.config.ts"],
+    },
+  ]
 }
