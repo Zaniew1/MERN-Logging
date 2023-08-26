@@ -1,7 +1,5 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const fs = require('fs');
-const { convert } = require('html-to-text');
 module.exports = class  Email{
   constructor(user, url){
     this.username = user.username;
@@ -14,7 +12,7 @@ module.exports = class  Email{
   newTransport(){
     return nodemailer.createTransport({
       host: 'smtp.sendgrid.net',
-      port: 587,
+      port: process.env.SENDGRID_PORT,
       secure: false,
       auth:{
         user:process.env.SENDGRID_USERNAME,
@@ -24,7 +22,6 @@ module.exports = class  Email{
   }
   async send(template, subject){
     try{
-      // const html = fs.readFileSync(`./views/${template}.html`, 'utf-8');
       const mailOptions = {
       from: this.from,
       to: this.to,
