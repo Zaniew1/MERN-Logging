@@ -31,8 +31,7 @@ export  const Login:React.FC = ():JSX.Element => {
         return response.json();
       })
       .then((result:UserDataType) => {
-        console.log(result)
-        if(result.status == 'success'){
+        if(result.status === 'success'){
           setloggedIn(true);
           setUserData(result)
           navigate('/');
