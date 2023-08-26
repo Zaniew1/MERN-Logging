@@ -28,16 +28,16 @@ export  const Login:React.FC = ():JSX.Element => {
         body: JSON.stringify({ email, password }),
       })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
         return response.json();
       })
       .then((result:UserDataType) => {
+        console.log(result)
         if(result.status == 'success'){
           setloggedIn(true);
           setUserData(result)
           navigate('/');
+        }else{
+          setError(result.message);
         }
       })
       .catch((error) => {

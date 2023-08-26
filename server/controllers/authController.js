@@ -82,20 +82,18 @@ exports.loginUser = catchAsync(async (req, res, next)=>{
     const {email, password} = req.body;
     if(!email || !password){
         return next(new AppError('There have to be email and password', 400));
-        
     }
     if(!password.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)){
         return next(new AppError('Password needs to contain min. 8 letters, 1 big, 1 small letter and 1 special character', 400));
-        
     }
     const user = await Users.findOne({email}).select('+password');
-    
-//// TU COŚ NIE DZIAŁA
-    console.log( user.correctPassword(password, user.password) )
-
-    // if (!user || !(await user.correctPassword(password, user.password))) {
-    //     return next(new AppError('Incorrect email or password', 401));
-    //   }
+    if (!user){
+        return next(new AppError('User with that email does not exist', 401));
+    }
+    const isGoodPassword = await user.comparePasswords(password, user.password);
+    if(!isGoodPassword) {
+        return next(new AppError('Incorrect password', 401));
+    }
     createSendToken(user, 200, req, res);
 })
 
