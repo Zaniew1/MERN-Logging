@@ -5,7 +5,6 @@ import {AuthContext} from '../../store/Auth-context'
 import '../../style.css';
 export const Home:React.FC = ():JSX.Element=>{
     const {loggedIn, userData, setloggedIn, setUserData} = useContext(AuthContext);
-    console.log(userData)
     const {username, email, creationDate} = userData.data.user ;
     const userDataEmpty = {
         status:'',

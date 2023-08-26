@@ -2,8 +2,6 @@ import { useState } from "react";
 import {useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowTurnUp } from "@fortawesome/free-solid-svg-icons";
-import '../../index.css';
-import '../../style.css';
 export const ForgetPassword:React.FC = ():JSX.Element => {
     const [email, setEmail] = useState<string>('');
     const [error, setError] = useState<string>("")
@@ -49,7 +47,7 @@ export const ForgetPassword:React.FC = ():JSX.Element => {
             <main className="container" >
             <div className='form signInForm'>
                 <form>
-                    <h3>Forgot your password? Enter your email and we will send you activation link</h3>
+                    <h3 className="text-gray-500 text-lg">Forgot your password? Enter your email and we will send you activation link</h3>
                     <input type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value);setSuccess(''); setError('');}} value={email} required/>
                     <button className='formBtn' onClick={forgetPassword} >Send</button>
                     <div className={error ? "error" : ""}>{error ? error : ''}</div>
