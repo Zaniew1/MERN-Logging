@@ -6,7 +6,7 @@ module.exports = class  Email{
     this.to = user.email;
     this.firstName = user.username;
     this.url = url;
-    this.from = `zaniew123@wp.pl`;
+    this.from = process.env.EMAIL_FROM;
   }
   
   newTransport(){
