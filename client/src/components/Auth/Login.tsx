@@ -3,7 +3,7 @@ import '../../index.css';
 import '../../style.css';
 import { useState, useContext } from "react";
 import {AuthContext, UserDataType} from '../../store/Auth-context'
-
+import { inputStyle, errorStyle,  buttonStyle, formStyle } from '../../tailwindStyles';
 export  const Login:React.FC = ():JSX.Element => {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>('');
@@ -43,16 +43,15 @@ export  const Login:React.FC = ():JSX.Element => {
         console.error("Error:", error);
       });
   }
- 
     return(
-      <div className='form signInForm'>
+      <div className={formStyle + " top-0 delay-1000"}>
       <form>
         <h3>Sign in</h3>
-        <input type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value); setError('');}} value={email} required/>
-        <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value); setError('');}} value={password} required/>
-        <button className='formBtn' onClick={LoginUser} >Login</button>
-        <Link to="/forgetPassword" className="forgot" >Forgot Password</Link>
-        <div className={error ? "error" : ""}>{error ? error : ''}</div>
+        <input  className={inputStyle} type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value); setError('');}} value={email} required/>
+        <input className={inputStyle} type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value); setError('');}} value={password} required/>
+        <button className={buttonStyle} onClick={LoginUser} >Login</button>
+        <Link to="/forgetPassword" className="underline text-[#333] text-[0.8em] tracking-[0.05px]" >Forgot Password</Link>
+        <div className={error ? errorStyle : ""}>{error ? error : ''}</div>
       </form>
     </div>
     );

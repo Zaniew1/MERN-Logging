@@ -1,11 +1,10 @@
 import '../../index.css';
-import '../../style.css';
 import {useNavigate } from 'react-router-dom'
 
 import { useState, useContext } from "react";
 import {AuthContext, UserDataType} from '../../store/Auth-context'
-
-
+import { inputStyle, errorStyle, successStyle, buttonStyle, formStyle } from '../../tailwindStyles';
+     
 export  const Registration:React.FC = ():JSX.Element => {
 
   const navigate = useNavigate();
@@ -18,14 +17,6 @@ export  const Registration:React.FC = ():JSX.Element => {
   const [success, setSuccess] = useState<string>("");
     function createNewUser(e: React.SyntheticEvent<EventTarget>): void {
       e.preventDefault();
-      // if(password !== confirmPassword ){
-      //   setError("Hasła powinne być takie same");
-      //   return;
-      // }
-      // if(!password.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)){
-      //   setError("Hasło powinno zawierać minimum 8 znaków, 1 dużą literę, 1 małą i jeden znak specjalny");
-      //   return;
-      // }
         fetch("http://localhost:3001/createNewUser", {
           method: "POST",
           headers: {
@@ -55,16 +46,16 @@ export  const Registration:React.FC = ():JSX.Element => {
     }
 
     return(
-        <div className='form signUpForm'>
+        <div className={formStyle + "top-[100%] delay-1000"}>
             <form>
               <h3>Sign Up</h3>
-              <input type="text" placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}} value={username} required/>
-              <input type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}} value={email} required/>
-              <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value); setError('')}} value={password} required/>
-              <input type="password" placeholder="Confirm Password" onChange={(e)=>{setConfirmPassword(e.target.value); setError('')}} value={confirmPassword} required/>
-              <button onClick={createNewUser} className='formBtn' >Register</button>
-              <div className={error ? "error" : ""}>{error ? error : ''}</div>
-              <div className={success ? "success" : ""}>{success ? success : ''}</div>
+              <input className={inputStyle}  type="text" placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}} value={username} required/>
+              <input className={inputStyle}  type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}} value={email} required/>
+              <input className={inputStyle}  type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value); setError('')}} value={password} required/>
+              <input className={inputStyle}  type="password" placeholder="Confirm Password" onChange={(e)=>{setConfirmPassword(e.target.value); setError('')}} value={confirmPassword} required/>
+              <button onClick={createNewUser} className={buttonStyle} >Register</button>
+              <div className={error ? errorStyle : ""}>{error ? error : ''}</div>
+              <div className={success ? successStyle : ""}>{success ? success : ''}</div>
             </form>
         </div>
     );

@@ -4,7 +4,7 @@ import {useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowTurnUp } from "@fortawesome/free-solid-svg-icons";
 import '../../index.css';
-import '../../style.css';
+import { headerStyle, boxStyle, wrapperStyle, goBackStyle, containerStyle, buttonContainerStyle } from '../../tailwindStyles';
 import { useState } from 'react';
 export const RegistrationLoginPage:React.FC = ():JSX.Element =>{
 const [slider, setSlider] = useState<boolean>(false);
@@ -14,18 +14,18 @@ function goBack(){
   navigate(-1);
 }
     return (
-    <div className={`wrapper ${slider == false ? "" : "slide"}`}>
-        <div className="goBack" onClick={goBack}><FontAwesomeIcon icon={faArrowTurnUp} /></div>
-        <main className="container" >
-        <div className="box signin">
-          <h2 className="header">Already have an account ?</h2>
-          <button className="button" onClick={()=>setSlider(false)}>Sign in</button>
+    <div className={wrapperStyle + `${!slider ? "" : "bg-myRed"}`}>
+        <div className={goBackStyle} onClick={goBack}><FontAwesomeIcon icon={faArrowTurnUp} /></div>
+        <main className={containerStyle} >
+        <div className={boxStyle + "signin"}>
+          <h2 className={headerStyle}>Already have an account ?</h2>
+          <button className={buttonContainerStyle} onClick={()=>setSlider(false)}>Sign in</button>
         </div>
-        <div className="box signup">
-          <h2 className="header">Don't have an account ?</h2>
-          <button className="button" onClick={()=>setSlider(true)} >Sign up</button>
+        <div className={boxStyle + "signup"}>
+          <h2 className={headerStyle}>Don't have an account ?</h2>
+          <button className={buttonContainerStyle} onClick={()=>setSlider(true)} >Sign up</button>
         </div>
-        <div className="formWrapper">
+        <div className="absolute left-[50px] w-[350px] h-[480px] bg-white z-[100] shadow-myShadow duration-500 delay-200 overflow-hidden">
           <Login/>
           <Registration/>
         </div>
